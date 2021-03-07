@@ -1,12 +1,9 @@
 package com.maaxgr
 
 import com.maaxgr.entities.ToDo
-import com.maaxgr.repository.InMemoryToDoRepository
-import com.maaxgr.repository.ToDoRepository
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
-import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
@@ -24,38 +21,21 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-
-        val repository: ToDoRepository = InMemoryToDoRepository()
+        val todos = listOf<ToDo>(
+            ToDo(1, "Plan content for video #2", true),
+            ToDo(2, "Record video #2", false),
+            ToDo(3, "Upload video #2", false)
+        )
 
         get("/") {
             call.respondText("Hello Todolist!")
         }
 
         get("/todos") {
-            call.respond(repository.getAllToDos())
+            call.respond(todos)
         }
 
         get("/todos/{id}") {
-            val id = call.parameters["id"]?.toIntOrNull()
-
-            if (id == null) {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    "id parameter has to be a number"
-                )
-                return@get
-            }
-
-            val todo = repository.getToDo(id)
-
-            if (todo == null) {
-                call.respond(
-                    HttpStatusCode.NotFound,
-                    "found no todo for the provided id $id"
-                )
-            } else {
-                call.respond(todo)
-            }
         }
 
         post("/todos") {
