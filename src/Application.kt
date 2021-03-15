@@ -1,6 +1,5 @@
 package com.maaxgr
 
-import com.maaxgr.entities.ToDo
 import com.maaxgr.entities.ToDoDraft
 import com.maaxgr.repository.InMemoryToDoRepository
 import com.maaxgr.repository.ToDoRepository
