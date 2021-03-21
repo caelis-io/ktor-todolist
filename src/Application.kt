@@ -1,7 +1,9 @@
 package com.maaxgr
 
+import com.maaxgr.database.DatabaseManager
 import com.maaxgr.entities.ToDoDraft
 import com.maaxgr.repository.InMemoryToDoRepository
+import com.maaxgr.repository.MySQLTodoRepository
 import com.maaxgr.repository.ToDoRepository
 import io.ktor.application.*
 import io.ktor.features.*
@@ -26,7 +28,7 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
 
-        val repository: ToDoRepository = InMemoryToDoRepository()
+        val repository: ToDoRepository = MySQLTodoRepository()
 
         get("/") {
             call.respondText("Hello Todolist!")
